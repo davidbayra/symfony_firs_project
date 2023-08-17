@@ -8,6 +8,7 @@ use Doctrine\Persistence\ManagerRegistry;
 use App\Entity\Conference;
 use Doctrine\ORM\Tools\Pagination\Paginator;
 
+
 /**
  * @extends ServiceEntityRepository<Comment>
  *
@@ -29,7 +30,9 @@ class CommentRepository extends ServiceEntityRepository
     {
         $query = $this->createQueryBuilder('c')
             ->andWhere('c.conference = :conference')
+            ->andWhere('c.state = :state')
             ->setParameter('conference', $conference)
+            ->setParameter('state', 'submitted')
             ->orderBy('c.createdAt', 'DESC')
             ->setMaxResults(self::PAGINATOR_PER_PAGE)
             ->setFirstResult($offset)
